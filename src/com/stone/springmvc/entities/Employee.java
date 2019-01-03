@@ -1,10 +1,26 @@
 package com.stone.springmvc.entities;
 
+import java.util.Date;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
 public class Employee {
 	private Integer id;
+	@NotEmpty
 	private String lastName;
+	@Email
 	private String email;
 	private Integer gender;
+	@Past
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date birth;
+	@NumberFormat(pattern="#,###,###.#")
+	private Float salary;
 	private Department department;
 	public Employee() {
 		super();
@@ -42,6 +58,18 @@ public class Employee {
 	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
+	public Date getBirth() {
+		return birth;
+	}
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
+	public Float getSalary() {
+		return salary;
+	}
+	public void setSalary(Float salary) {
+		this.salary = salary;
+	}
 	public Department getDepartment() {
 		return department;
 	}
@@ -50,7 +78,7 @@ public class Employee {
 	}
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", lastName=" + lastName + ", email=" + email + ", gender=" + gender
-				+ ", department=" + department + "]";
+		return "Employee [id=" + id + ", lastName=" + lastName + ", email=" + email + ", gender=" + gender + ", birth="
+				+ birth + ", salary=" + salary + ", department=" + department + "]";
 	}
 }

@@ -12,6 +12,14 @@
 </head>
 <body>
 	
+	<br><br>
+	<form action="testConversionServiceConverter" method="post">
+		<!-- 将字符串转换为Employee对象：gg-gg@stone.com-0-105  -->
+		Employee:<input type="text" name="employee">
+		<br>
+		<input type="submit" value="Submit">
+	</form>
+	
 	<!-- 
 		1。为什么使用form标签？可以更快速的开发出表单页面，而且可以更方便的进行表单值的回显
 		2。注意：可以通过ModelAttribute属性指定绑定的模型属性，
@@ -22,9 +30,14 @@
 	 <!-- ${pageContext.request.contextPath }/emp表示使用绝对路径，否则在修改的时候会出现问题 -->
 	 <form:form action="${pageContext.request.contextPath }/emp" method="POST" modelAttribute="employee">
 	 	
+	 	<!-- 显示该表单所有错误 -->
+	 	<form:errors path="*"></form:errors>
+	 	<br><br>
+	 	
 	 	<c:if test="${employee.id == null }">
 	 		<!-- path属性对应html表单标签的name属性值 -->
 	 		LastName:<form:input path="lastName"/>
+	 		<form:errors path="lastName"></form:errors>
 	 	</c:if>
 	 	<c:if test="${employee.id != null }">
 	 		<form:hidden path="id"/>
@@ -33,6 +46,7 @@
 	 	</c:if>
 	 	<br>
 	 	Email:<form:input path="email"/>
+	 	<form:errors path="email"></form:errors>
 	 	<br>
 	 	<%
 	 		Map<String, String> genders = new HashMap();
@@ -45,6 +59,24 @@
 	 	<form:radiobuttons path="gender" items="${genders }" delimiter="<br>"/>
 	 	<br>
 	 	Department:<form:select path="department.id" items="${departments }" itemLabel="departmentName" itemValue="id"></form:select>
+	 	<br>
+	 	<!-- 
+	 		1.数据类型转换
+	 		2.数据类型格式化
+	 		3.数据校验
+	 		1).如何校验？注解？
+	 		（1）。使用JSR 303验证标准
+	 		（2）。加入hibernate validator验证框架的Jar包
+	 		（3）。在SpringMVC配置文件中添加<mvc:annotation-driven/>
+	 		（4）。需要在bean的属性上添加对应的注解
+	 		（5）。在目标方法bean类型的前面添加@Valid注解
+	 		2）。验证出错转向到哪一个页面
+	 		3）。错误消息？如何显示，如何把错误消息进行国际化
+	 	 -->
+	 	Birth:<form:input path="birth"/>
+	 	<form:errors path="birth"></form:errors>
+	 	<br>
+	 	Salary:<form:input path="salary"/>
 	 	<br>
 	 	<input type="submit" value="Submit">
 	 </form:form>
